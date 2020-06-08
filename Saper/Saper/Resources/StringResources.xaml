@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Saper" 
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="_helpText" xml:space="preserve">To play use right and left mouse button.
+        
+            With right mouse button you can mark mine on the field.
+            Left mouse button reveals clicked field.
+        
+            If you happen to revela field with mine - you lose.
+            Your goal is to correctly mark all mines on the field. 
+            You don't have to reveal all fields without mines.
+        
+            Good luck!</system:String>
+    <system:String x:Key="_helpTitle">Help</system:String>
+</ResourceDictionary>

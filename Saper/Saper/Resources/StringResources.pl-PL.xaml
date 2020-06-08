@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Saper" 
+                    xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <System:String x:Key="_helpText" xml:space="preserve">Aby grać używaj prawego i lewego przycisku myszy.
+            Prawym przyciskiem możesz oznaczyć minę. 
+            Lewy odkrywa pole. 
+            
+            Po otwarciu pola z miną przegrywasz. 
+            
+            Celem jest oznaczenie wszystkich min na planszy. 
+            
+            Powodzenia!</System:String>
+</ResourceDictionary>
