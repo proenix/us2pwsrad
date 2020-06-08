@@ -2,6 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Saper" 
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="_helpTitle">Help</system:String>
     <system:String x:Key="_helpText" xml:space="preserve">To play use right and left mouse button.
         
             With right mouse button you can mark mine on the field.
@@ -12,5 +13,10 @@
             You don't have to reveal all fields without mines.
         
             Good luck!</system:String>
-    <system:String x:Key="_helpTitle">Help</system:String>
+    <system:String x:Key="_aboutTitle">Help</system:String>
+    <system:String x:Key="_aboutText" xml:space="preserve">
+        Saper v1.0.0
+        
+        Author: Piotr Trzepacz
+    </system:String>
 </ResourceDictionary>

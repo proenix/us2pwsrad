@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -63,7 +64,6 @@ namespace Saper
         // Open Help window.
         private void MenuItem_Click_Help(object sender, RoutedEventArgs e)
         {
-            // TODO: Open help window
             WindowHelp windowHelp = new WindowHelp();
             windowHelp.Show();
         }
@@ -71,7 +71,8 @@ namespace Saper
         // Open About window.
         private void MenuItem_Click_About(object sender, RoutedEventArgs e)
         {
-            // TODO: Open about window
+            WindowAbout windowAbout = new WindowAbout();
+            windowAbout.Show();
         }
 
         // Intercept Window Closing mechanism. 
