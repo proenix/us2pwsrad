@@ -24,5 +24,30 @@ namespace Saper
         {
             InitializeComponent();
         }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Start new game
+        }
+
+        private void MenuItem_Click_Options(object sender, RoutedEventArgs e)
+        {
+            // TODO: Open options window
+        }
+
+        private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
+        {
+            // TODO: Close game
+        }
+
+        private void MenuItem_Click_Help(object sender, RoutedEventArgs e)
+        {
+            // TODO: Open help window
+        }
+
+        private void MenuItem_Click_About(object sender, RoutedEventArgs e)
+        {
+            // TODO: Open about window
+        }
     }
 }
