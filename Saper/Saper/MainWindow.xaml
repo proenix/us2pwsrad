@@ -5,16 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Saper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            <MenuItem Header="_Game">
-                <MenuItem Header="_New" Click="MenuItem_Click" />
-                <MenuItem Header="_Options" Click="MenuItem_Click_Options" />
-                <MenuItem Header="_Exit" Click="MenuItem_Click_Exit" />
-            </MenuItem>
-            <MenuItem Header="_Help" Click="MenuItem_Click_Help" />
-            <MenuItem Header="_About" Click="MenuItem_Click_About" />
-        </Menu>
-    </DockPanel>
+        Title="Saper" Height="450" Width="800" Closing="Window_Closing" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+    <Grid>
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="_Game">
+                    <MenuItem Header="_New" Click="MenuItem_Click" />
+                    <MenuItem Header="_Options" Click="MenuItem_Click_Options" />
+                    <MenuItem Header="_Exit" Click="MenuItem_Click_Exit" />
+                </MenuItem>
+                <MenuItem Header="_Help" Click="MenuItem_Click_Help" />
+                <MenuItem Header="_About" Click="MenuItem_Click_About" />
+            </Menu>
+        </DockPanel>
+        
+    </Grid>
 </Window>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,24 +31,46 @@ namespace Saper
             // TODO: Start new game
         }
 
+        // Open options window.
         private void MenuItem_Click_Options(object sender, RoutedEventArgs e)
         {
             // TODO: Open options window
         }
 
+        // Exit application from main menu.
         private void MenuItem_Click_Exit(object sender, RoutedEventArgs e)
         {
-            // TODO: Close game
+            this.Close();
         }
 
+        // Open Help window.
         private void MenuItem_Click_Help(object sender, RoutedEventArgs e)
         {
             // TODO: Open help window
         }
 
+        // Open About window.
         private void MenuItem_Click_About(object sender, RoutedEventArgs e)
         {
             // TODO: Open about window
+        }
+
+        // Intercept Window Closing mechanism. 
+        /// <summary>
+        /// Ask user if Application should be closed. If user answer is No, cancel app closing.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            var response = MessageBox.Show("Do you really want to exit?", "Exiting...",
+                MessageBoxButton.YesNo, 
+                MessageBoxImage.Question);
+
+            if (response == MessageBoxResult.No)
+            {
+                e.Cancel = true;
+            }
         }
     }
 }
