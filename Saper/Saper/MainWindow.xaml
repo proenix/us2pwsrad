@@ -10,7 +10,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_Game">
-                    <MenuItem Header="_New" Click="MenuItem_Click" />
+                    <MenuItem Header="_New" Click="MenuItem_Click_NewGame" />
                     <MenuItem Header="_Options" Click="MenuItem_Click_Options" />
                     <MenuItem Header="_Exit" Click="MenuItem_Click_Exit" />
                 </MenuItem>
@@ -30,7 +30,7 @@
                 <Label x:Name="labelTimer" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
             </Grid>
         </Grid>
-        
+
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,6" MinWidth="300" MinHeight="300">
             <Grid x:Name="mineField" 
               MinWidth="300" 
@@ -48,9 +48,9 @@
                 <Grid.Resources>
                     <Style TargetType="{x:Type Label}">
                         <Setter Property="Margin" Value="0,0,0,0" />
+                        <Setter Property="FontWeight" Value="Bold" />
                     </Style>
                 </Grid.Resources>
-
             </Grid>
         </ScrollViewer>
     </Grid>

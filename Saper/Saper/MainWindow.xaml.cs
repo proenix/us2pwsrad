@@ -31,7 +31,8 @@ namespace Saper
             SetLanguageDictionary();
 
             this.game = new SaperGame(mineField);
-            game.generateField(10, 10, 20);
+            this.game.setOptions(10, 10, 20);
+            this.game.generateField();
         }
 
         private void SetLanguageDictionary()
@@ -49,9 +50,10 @@ namespace Saper
             this.Resources.MergedDictionaries.Add(dict);
         }
 
-        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        // Start new game with current options.
+        private void MenuItem_Click_NewGame(object sender, RoutedEventArgs e)
         {
-            // TODO: Start new game
+            this.game.generateField();
         }
 
         // Open options window.
