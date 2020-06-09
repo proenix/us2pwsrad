@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
@@ -119,8 +120,9 @@ namespace Saper
                         //label.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/mine_icon.png")));
                         //label.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/flag.png")));
                         Background = Brushes.LightGray
-                        
                     };
+                    label.MouseUp += new MouseButtonEventHandler(FieldMouseUp);
+                    label.Tag = (row, col);
                     if (mineField[row,col].isMine == true)
                     {
                         label.Background = Brushes.Crimson;
@@ -131,11 +133,106 @@ namespace Saper
                     mineField[row, col].field = label;
                     mineField[row, col].fieldStatus = FieldStatus.unopen;
                     mineField[row, col].numberOfNeighbourMines = countNeighbourMines(row, col);
+                } 
+            }
+        }
 
-                    // TODO remove line below
-                    label.Content = mineField[row, col].numberOfNeighbourMines.ToString();
-                    label.Foreground = getTextBrushColor(mineField[row, col].numberOfNeighbourMines);
+        private void FieldMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            System.Windows.Controls.Label label = (System.Windows.Controls.Label) sender;
+            (int, int) pos = ((int, int)) label.Tag;
+            int row = pos.Item1;
+            int col = pos.Item2;
+
+            MineField mf = mineField[row, col];
+            // Already open do nothing.
+            if (mineField[row, col].fieldStatus == FieldStatus.open)
+                return;
+
+            // Check mouse click actions
+            if (e.ChangedButton == MouseButton.Left)
+            {
+                if (mineField[row, col].isMine == true)
+                {
+                    MessageBox.Show("GAME OVER.");
+                    mineField[row, col].fieldStatus = FieldStatus.open;
+                    revealField(row, col);
+
+                    // TODO: Finish game.
+                } 
+                else
+                {
+                    mineField[row, col].fieldStatus = FieldStatus.open;
+                    revealField(row, col);
                 }
+            } 
+            else if (e.ChangedButton == MouseButton.Middle)
+            {
+                // TODO
+            }
+            else if (e.ChangedButton == MouseButton.Right)
+            {
+                if (mineField[row, col].fieldStatus == FieldStatus.unopen)
+                {
+                    mineField[row, col].fieldStatus = FieldStatus.flag;
+                    revealField(row, col);
+                } 
+                else if (mineField[row, col].fieldStatus == FieldStatus.flag)
+                {
+                    mineField[row, col].fieldStatus = FieldStatus.questionMark;
+                    revealField(row, col);
+                }
+                else
+                {
+                    mineField[row, col].fieldStatus = FieldStatus.unopen;
+                    revealField(row, col);
+                }
+            }
+            winCheck();
+            // MessageBox.Show(label.Tag.ToString());
+        }
+
+        // Check for win conditions.
+        private void winCheck()
+        {
+            return;
+        }
+
+        // Reveal current field and near fileds if empty.
+        private void revealField(int row, int col)
+        {
+            // ref MineField mf = ref mineField[row, col];
+            MessageBox.Show("D");
+            if (mineField[row, col].fieldStatus == FieldStatus.open)
+            {
+                if (mineField[row, col].isMine == true)
+                {
+                    mineField[row, col].field.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/mine_icon_red.png")));
+                }
+                else
+                {
+                    mineField[row, col].field.Content = mineField[row, col].numberOfNeighbourMines.ToString();
+                    mineField[row, col].field.Foreground = getTextBrushColor(mineField[row, col].numberOfNeighbourMines);
+                    mineField[row, col].field.Background = Brushes.White;
+                }
+
+                // TODO: implement revealing near fields
+            } 
+            else if (mineField[row, col].fieldStatus == FieldStatus.flag)
+            {
+                mineField[row, col].field.Background = Brushes.LightGray;
+                mineField[row, col].field.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/flag.png")));
+            }
+            else if (mineField[row, col].fieldStatus == FieldStatus.questionMark)
+            {
+                mineField[row, col].field.Content = "?";
+                mineField[row, col].field.Background = Brushes.LightGray;
+                mineField[row, col].field.Foreground = Brushes.DarkCyan;
+            } 
+            else
+            {
+                mineField[row, col].field.Background = Brushes.LightGray;
+                mineField[row, col].field.Content = "";
             }
         }
 
