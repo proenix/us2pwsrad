@@ -31,7 +31,7 @@ namespace Saper
             SetLanguageDictionary();
 
             this.game = new SaperGame(mineField);
-            game.generateFields(50, 50, 20);
+            game.generateField(10, 10, 20);
         }
 
         private void SetLanguageDictionary()
