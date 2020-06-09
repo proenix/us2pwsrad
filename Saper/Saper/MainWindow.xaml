@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Saper"
         mc:Ignorable="d"
-        Title="Saper" Height="450" Width="800" Closing="Window_Closing" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" ResizeMode="NoResize">
+        Title="Saper" Height="450" Width="379.769" Closing="Window_Closing" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
@@ -18,6 +18,40 @@
                 <MenuItem Header="_About" Click="MenuItem_Click_About" />
             </Menu>
         </DockPanel>
+        <Grid Margin="10,25,10,0" Grid.ColumnSpan="2" Height="45" VerticalAlignment="Top" MinWidth="300">
+            <Grid Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Width="100" Background="#FFE6E6E6">
+                <Label Content="Mines left:" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <Label x:Name="labelMines" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+            </Grid>
+            <Grid Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Center" Width="100">
+            </Grid>
+            <Grid Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Right" Width="100" Background="#FFE6E6E6">
+                <Label Content="Time:" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <Label x:Name="labelTimer" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+            </Grid>
+        </Grid>
         
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,6" MinWidth="300" MinHeight="300">
+            <Grid x:Name="mineField" 
+              MinWidth="300" 
+              MinHeight="300" 
+              Background="#7FE2D8D8" 
+              VerticalAlignment="Top" 
+              Margin="0" 
+              ShowGridLines="True" 
+              HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                <Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Margin" Value="0,0,0,0" />
+                    </Style>
+                </Grid.Resources>
+
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>

@@ -23,10 +23,15 @@ namespace Saper
     /// </summary>
     public partial class MainWindow : Window
     {
+        SaperGame game;
+
         public MainWindow()
         {
             InitializeComponent();
             SetLanguageDictionary();
+
+            this.game = new SaperGame(mineField);
+            game.generateFields(50, 50, 20);
         }
 
         private void SetLanguageDictionary()
