@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Saper"
         mc:Ignorable="d"
-        Title="{DynamicResource _aboutTitle}" Height="450" Width="800" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterOwner" Topmost="True" ShowInTaskbar="False">
+        Title="{DynamicResource _aboutTitle}" Height="450" Width="800" ResizeMode="NoResize" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen" Topmost="True" ShowInTaskbar="False">
     <Grid>
         <TextBlock HorizontalAlignment="Center" Margin="10" TextWrapping="Wrap" VerticalAlignment="Center" Text="{DynamicResource _aboutText}"/>
 

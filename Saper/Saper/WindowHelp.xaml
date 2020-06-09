@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Saper"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Saper.WindowHelp"
         mc:Ignorable="d"
-        Title="{DynamicResource _helpTitle}" Height="400" Width="400" WindowStartupLocation="CenterOwner" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
+        Title="{DynamicResource _helpTitle}" Height="400" Width="400" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" ShowInTaskbar="False" Topmost="True">
     <Grid>
         <TextBlock HorizontalAlignment="Center" Margin="10" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" LineStackingStrategy="BlockLineHeight" Text="{DynamicResource _helpText}"/>
 

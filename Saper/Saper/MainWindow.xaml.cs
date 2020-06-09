@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -23,7 +24,7 @@ namespace Saper
     /// </summary>
     public partial class MainWindow : Window
     {
-        SaperGame game;
+        private SaperGame game;
 
         public MainWindow()
         {
@@ -59,7 +60,8 @@ namespace Saper
         // Open options window.
         private void MenuItem_Click_Options(object sender, RoutedEventArgs e)
         {
-            // TODO: Open options window
+            WindowOptions windowOptions = new WindowOptions(this, game.getSize(), game.getMines());
+            windowOptions.Show();
         }
 
         // Exit application from main menu.
@@ -98,6 +100,12 @@ namespace Saper
             {
                 e.Cancel = true;
             }
+        }
+
+        // Pass saving options to game object.
+        internal void setGameOptions(int cols, int rows, int mines)
+        {
+            this.game.setOptions(cols, rows, mines);
         }
     }
 }

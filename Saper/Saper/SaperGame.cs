@@ -62,6 +62,16 @@ namespace Saper
             }
         }
 
+        public int getMines()
+        {
+            return this.mines;
+        }
+
+        public (int, int) getSize()
+        {
+            return (this.rows, this.cols);
+        }
+
         // Set options for game.
         public void setOptions(int cols, int rows, int mines)
         {
