@@ -25,6 +25,8 @@ namespace Saper
         private bool gameEnded = false;
 
         private Grid mineFieldLayout;
+        private System.Windows.Controls.Label movesLabel;
+        private System.Windows.Controls.Label timerLabel;
         private MineField[,] mineField;
 
         // Define structore of single mine field.
@@ -36,17 +38,54 @@ namespace Saper
             public int numberOfNeighbourMines;
         }
 
+        private int _numberOfMoves;
+        public int NumberOfMoves
+        {
+            get { return _numberOfMoves; }
+            set
+            {
+                if (value != _numberOfMoves)
+                {
+                    _numberOfMoves = value;
+                    this.movesLabel.Content = value;
+                }
+            }
+        }
+
+        private int _timerCounter;
+        public int TimerCounter
+        {
+            get { return _timerCounter; }
+            set
+            {
+                if (value != _timerCounter)
+                {
+                    _timerCounter = value;
+                    this.timerLabel.Content = value;
+                }
+            }
+        }
+        System.Windows.Threading.DispatcherTimer dispatcherTimer;
+
+        internal void SetReferences(System.Windows.Controls.Label movesLabel, System.Windows.Controls.Label timerLabel)
+        {
+            this.movesLabel = movesLabel;
+            this.timerLabel = timerLabel;
+        }
+
         // Holds predefined types of possible in-game field state
         private enum FieldStatus
         {
             open, unopen, flag, questionMark
         }
 
-        // Initialize class object for game.
-        public SaperGame(Grid mineFieldLayout)
+        public SaperGame(Grid mineField)
         {
             this.rng = new Random();
-            this.mineFieldLayout = mineFieldLayout;
+            this.mineFieldLayout = mineField;
+            this.dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            this.dispatcherTimer.Tick += dispatcherTimer_Tick;
+            this.dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
         }
 
         // Initilaize row and column definitions for game field.
@@ -88,6 +127,9 @@ namespace Saper
         {
             firstMoveDone = false;
             gameEnded = false;
+            NumberOfMoves = 0;
+            TimerCounter = 0;
+            dispatcherTimer.Stop();
             generateField();
         }
 
@@ -176,9 +218,10 @@ namespace Saper
                     } 
                     else
                     {
-                        MessageBox.Show("GAME OVER.");
-                        this.gameEnded = true;
+                        this.dispatcherTimer.Stop();
                         revealNeighbours(row, col, true);
+                        this.gameEnded = true;
+                        MessageBox.Show("GAME OVER.");
                     }
                 } 
                 else
@@ -208,14 +251,26 @@ namespace Saper
                     displayField(row, col);
                 }
             }
-            this.firstMoveDone = true;
+            if (!this.firstMoveDone)
+            {
+                this.dispatcherTimer.Start();
+                this.firstMoveDone = true;
+            }
+            NumberOfMoves++;
 
             if (winCheck())
             {
                 gameEnded = true;
-                MessageBox.Show("Congrats! Field finished.");
+                this.dispatcherTimer.Stop();
                 revealNeighbours(row, col, true);
+                MessageBox.Show("Congrats! Field finished.");
             }
+        }
+
+        // Increment Time Counter on each tick.
+        private void dispatcherTimer_Tick(object sender, EventArgs e)
+        {
+            this.TimerCounter++;
         }
 
         // Check for win conditions.

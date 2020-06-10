@@ -33,6 +33,7 @@ namespace Saper
 
             this.game = new SaperGame(mineField);
             this.game.setOptions(10, 10, 20);
+            this.game.SetReferences(labelMoves, labelTimer);
             this.game.startGame();
         }
 
