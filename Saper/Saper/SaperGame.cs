@@ -154,8 +154,6 @@ namespace Saper
             int row = pos.Item1;
             int col = pos.Item2;
 
-            MineField mf = mineField[row, col];
-
             // Game already ended. Do nothing
             if (this.gameEnded == true)
                 return;
@@ -169,7 +167,7 @@ namespace Saper
             {
                 if (mineField[row, col].isMine == true)
                 {
-                    // Check for first move. Should always be without mine.
+                    // Check for first move. First field should always be without mine.
                     if (this.firstMoveDone == false)
                     {
                         generateField();
@@ -179,17 +177,13 @@ namespace Saper
                     else
                     {
                         MessageBox.Show("GAME OVER.");
-                        mineField[row, col].fieldStatus = FieldStatus.open;
                         this.gameEnded = true;
-                        revealField(row, col);
-
-                        // TODO: Finish game. Reveal all fields.
+                        revealNeighbours(row, col, true);
                     }
                 } 
                 else
                 {
-                    mineField[row, col].fieldStatus = FieldStatus.open;
-                    revealField(row, col);
+                    revealNeighbours(row, col);
                 }
             } 
             else if (e.ChangedButton == MouseButton.Middle)
@@ -201,26 +195,27 @@ namespace Saper
                 if (mineField[row, col].fieldStatus == FieldStatus.unopen)
                 {
                     mineField[row, col].fieldStatus = FieldStatus.flag;
-                    revealField(row, col);
+                    displayField(row, col);
                 } 
                 else if (mineField[row, col].fieldStatus == FieldStatus.flag)
                 {
                     mineField[row, col].fieldStatus = FieldStatus.questionMark;
-                    revealField(row, col);
+                    displayField(row, col);
                 }
                 else
                 {
                     mineField[row, col].fieldStatus = FieldStatus.unopen;
-                    revealField(row, col);
+                    displayField(row, col);
                 }
             }
             this.firstMoveDone = true;
+
             if (winCheck())
             {
                 gameEnded = true;
                 MessageBox.Show("Congrats! Field finished.");
+                revealNeighbours(row, col, true);
             }
-            // MessageBox.Show(label.Tag.ToString());
         }
 
         // Check for win conditions.
@@ -266,7 +261,7 @@ namespace Saper
         }
 
         // Reveal current field and near fileds if empty.
-        private void revealField(int row, int col)
+        private void displayField(int row, int col)
         {
             // ref MineField mf = ref mineField[row, col];
             if (mineField[row, col].fieldStatus == FieldStatus.open)
@@ -281,12 +276,9 @@ namespace Saper
                     mineField[row, col].field.Foreground = getTextBrushColor(mineField[row, col].numberOfNeighbourMines);
                     mineField[row, col].field.Background = Brushes.White;
                 }
-
-                // TODO: implement revealing near fields
             } 
             else if (mineField[row, col].fieldStatus == FieldStatus.flag)
             {
-                mineField[row, col].field.Background = Brushes.LightGray;
                 mineField[row, col].field.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/flag.png")));
             }
             else if (mineField[row, col].fieldStatus == FieldStatus.questionMark)
@@ -327,6 +319,97 @@ namespace Saper
             return mineCount;
         }
 
+        // Reveal neighbouring fields.
+        /// <summary>
+        /// Reveals neighbouring fields of provided field if current field has 0 mines in neighbouring fields.
+        /// Can also reveal whole board if ignoreFieldStatus param is set to true.
+        /// </summary>
+        /// <param name="row">Row number of field that should be checked.</param>
+        /// <param name="col">Column number of field that should be checked.</param>
+        /// <param name="ignoreFieldStatus">Ignore number of mines and reveal everything.</param>
+        private void revealNeighbours(int row, int col, bool ignoreFieldStatus = false)
+        {
+            int startPosRow = (row - 1 < 0) ? row : (row - 1);
+            int startPosCol = (col - 1 < 0) ? col : (col - 1);
+            int endPosRow = (row + 1 >= rows) ? row : (row + 1);
+            int endPosCol = (col + 1 >= cols) ? col : (col + 1);
+
+            // If opened alredy pass
+            if (mineField[row, col].fieldStatus == FieldStatus.open)
+                return;
+
+            // Set current field as opened and reveal it.
+            mineField[row, col].fieldStatus = FieldStatus.open;
+            displayField(row, col);
+
+            // If all fields should be revealed.
+            if (ignoreFieldStatus && this.gameEnded) {
+                for (int nrow = 0; nrow < rows; nrow++)
+                {
+                    for (int ncol = 0; ncol < cols; ncol++)
+                    {
+                        revealNeighbours(nrow, ncol, ignoreFieldStatus);
+                    }
+                }
+            }
+
+            // Neighbouring mines count
+            int neighbourMines= mineField[row, col].numberOfNeighbourMines;
+
+            // top
+            if (startPosRow != row)
+            {
+                if (ignoreFieldStatus)
+                {
+                    revealNeighbours(startPosRow, col, ignoreFieldStatus);
+                } 
+                else if (neighbourMines == 0)
+                {
+                    revealNeighbours(startPosRow, col, ignoreFieldStatus);
+                }
+            }
+
+            // right
+            if (endPosCol != col)
+            {
+                if (ignoreFieldStatus)
+                {
+                    revealNeighbours(row, endPosCol, ignoreFieldStatus);
+                }
+                else if (neighbourMines == 0)
+                {
+                    revealNeighbours(row, endPosCol, ignoreFieldStatus);
+                }
+            }
+
+            // bottom
+            if (endPosRow != row)
+            { 
+                if (ignoreFieldStatus)
+                {
+                    revealNeighbours(endPosRow, col, ignoreFieldStatus);
+                }
+                else if (neighbourMines == 0)
+                {
+                    revealNeighbours(endPosRow, col, ignoreFieldStatus);
+                }
+            }
+            
+            // left
+            if (startPosCol != col)
+            {
+                if (ignoreFieldStatus)
+                {
+                    revealNeighbours(row, startPosCol, ignoreFieldStatus);
+                }
+                else if (neighbourMines == 0)
+                {
+                    revealNeighbours(row, startPosCol, ignoreFieldStatus);
+                }
+            }
+        }
+
+        // Color of number in field.
         private Brush getTextBrushColor(int numberOfMines)
         {
             switch(numberOfMines)
