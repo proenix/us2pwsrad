@@ -33,7 +33,7 @@ namespace Saper
 
             this.game = new SaperGame(mineField);
             this.game.setOptions(10, 10, 20);
-            this.game.generateField();
+            this.game.startGame();
         }
 
         private void SetLanguageDictionary()
@@ -54,7 +54,7 @@ namespace Saper
         // Start new game with current options.
         private void MenuItem_Click_NewGame(object sender, RoutedEventArgs e)
         {
-            this.game.generateField();
+            this.game.startGame();
         }
 
         // Open options window.

@@ -21,6 +21,9 @@ namespace Saper
 
         const int FIELD_WIDTH = 30;
 
+        private bool firstMoveDone = false;
+        private bool gameEnded = false;
+
         private Grid mineFieldLayout;
         private MineField[,] mineField;
 
@@ -79,6 +82,13 @@ namespace Saper
             this.cols = cols;
             this.rows = rows;
             this.mines = mines;
+        }
+
+        public void startGame()
+        {
+            firstMoveDone = false;
+            gameEnded = false;
+            generateField();
         }
 
         // Generate empty mine field and populate it with mines.
@@ -145,6 +155,11 @@ namespace Saper
             int col = pos.Item2;
 
             MineField mf = mineField[row, col];
+
+            // Game already ended. Do nothing
+            if (this.gameEnded == true)
+                return;
+
             // Already open do nothing.
             if (mineField[row, col].fieldStatus == FieldStatus.open)
                 return;
@@ -154,11 +169,22 @@ namespace Saper
             {
                 if (mineField[row, col].isMine == true)
                 {
-                    MessageBox.Show("GAME OVER.");
-                    mineField[row, col].fieldStatus = FieldStatus.open;
-                    revealField(row, col);
+                    // Check for first move. Should always be without mine.
+                    if (this.firstMoveDone == false)
+                    {
+                        generateField();
+                        FieldMouseUp(sender, e);
+                        return; 
+                    } 
+                    else
+                    {
+                        MessageBox.Show("GAME OVER.");
+                        mineField[row, col].fieldStatus = FieldStatus.open;
+                        this.gameEnded = true;
+                        revealField(row, col);
 
-                    // TODO: Finish game.
+                        // TODO: Finish game. Reveal all fields.
+                    }
                 } 
                 else
                 {
@@ -188,6 +214,7 @@ namespace Saper
                     revealField(row, col);
                 }
             }
+            this.firstMoveDone = true;
             winCheck();
             // MessageBox.Show(label.Tag.ToString());
         }
@@ -202,7 +229,6 @@ namespace Saper
         private void revealField(int row, int col)
         {
             // ref MineField mf = ref mineField[row, col];
-            MessageBox.Show("D");
             if (mineField[row, col].fieldStatus == FieldStatus.open)
             {
                 if (mineField[row, col].isMine == true)
