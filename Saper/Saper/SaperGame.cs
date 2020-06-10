@@ -92,12 +92,12 @@ namespace Saper
         }
 
         // Generate empty mine field and populate it with mines.
-        public void generateField()
+        private void generateField()
         {
             this.mineField = new MineField[rows, cols];
 
             // Populate field with number of mines
-            for (int mine = 0; mine <= mines; mine++)
+            for (int mine = 0; mine < mines; mine++)
             {
                 int row = rng.Next(0, rows);
                 int col = rng.Next(0, cols);
