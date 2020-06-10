@@ -215,14 +215,54 @@ namespace Saper
                 }
             }
             this.firstMoveDone = true;
-            winCheck();
+            if (winCheck())
+            {
+                gameEnded = true;
+                MessageBox.Show("Congrats! Field finished.");
+            }
             // MessageBox.Show(label.Tag.ToString());
         }
 
         // Check for win conditions.
-        private void winCheck()
+        private bool winCheck()
         {
-            return;
+            int counterPlacedFlags = 0;
+            int counterCorrectlyPlacedFlags = 0;
+            int counterPlacedQuestionMarks = 0;
+            int counterFieldsUnOpened = 0;
+            for (int row = 0; row < rows; row++)
+            {
+                for (int col = 0; col < cols; col++)
+                {
+                    switch (mineField[row, col].fieldStatus)
+                    {
+                        case FieldStatus.unopen:
+                            counterFieldsUnOpened++;
+                            break;
+                        case FieldStatus.flag:
+                            counterPlacedFlags++;
+                            if (mineField[row, col].isMine)
+                                counterCorrectlyPlacedFlags++;
+                            break;
+                        case FieldStatus.questionMark:
+                            counterPlacedQuestionMarks++;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+
+            if (this.mines == counterFieldsUnOpened && counterPlacedFlags == 0 && counterPlacedQuestionMarks == 0)
+                return true;
+
+            if ((counterFieldsUnOpened + counterPlacedFlags + counterPlacedQuestionMarks) == this.mines)
+                return true;
+
+            if (counterCorrectlyPlacedFlags == counterPlacedFlags && counterCorrectlyPlacedFlags == this.mines && counterFieldsUnOpened == 0)
+                return true;
+
+            return false;
         }
 
         // Reveal current field and near fileds if empty.
