@@ -48,7 +48,7 @@
     <system:String x:Key="_menuExit">Exit</system:String>
     <system:String x:Key="_menuHelp">Help</system:String>
     <system:String x:Key="_menuAbout">About</system:String>
-    <system:String x:Key="_labelMovesTitle">Number of moves:</system:String>
+    <system:String x:Key="_labelMinesTitle">Flags left:</system:String>
     <system:String x:Key="_labelTimeerTitle">Time:</system:String>
     
     <!-- Game strings -->

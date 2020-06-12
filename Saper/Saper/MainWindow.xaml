@@ -26,8 +26,8 @@
         </DockPanel>
         <Grid Margin="10,25,10,0" Grid.ColumnSpan="2" Height="45" VerticalAlignment="Top" MinWidth="300">
             <Grid Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Width="100" Background="#FFE6E6E6">
-                <Label Content="{DynamicResource _labelMovesTitle}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
-                <Label x:Name="labelMoves" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+                <Label Content="{DynamicResource _labelMinesTitle}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <Label x:Name="labelMines" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
             </Grid>
             <Grid Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Center" Width="100">
                 <Label x:Name="face" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="30" Height="30" BorderBrush="#FFA8A8A8" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxWidth="30" MouseDown="face_MouseDown" MouseUp="face_MouseUp">

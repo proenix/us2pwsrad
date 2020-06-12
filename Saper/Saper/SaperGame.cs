@@ -20,7 +20,7 @@ namespace Saper
         private bool gameEnded = false;
 
         private Grid mineFieldLayout;
-        private System.Windows.Controls.Label movesLabel;
+        private System.Windows.Controls.Label minesLabel;
         private System.Windows.Controls.Label timerLabel;
         private System.Windows.Controls.Label faceLabel;
 
@@ -44,7 +44,20 @@ namespace Saper
                 if (value != _numberOfMoves)
                 {
                     _numberOfMoves = value;
-                    this.movesLabel.Content = value;
+                }
+            }
+        }
+
+        private int _numberOfFlagsPlaced;
+        public int NumberOfFlagsToBePlaced
+        {
+            get { return _numberOfFlagsPlaced; }
+            set
+            {
+                if (value != _numberOfFlagsPlaced)
+                {
+                    _numberOfFlagsPlaced = value;
+                    this.minesLabel.Content = value;
                 }
             }
         }
@@ -64,9 +77,9 @@ namespace Saper
         }
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
 
-        internal void SetReferences(System.Windows.Controls.Label movesLabel, System.Windows.Controls.Label timerLabel, System.Windows.Controls.Label faceLabel)
+        internal void SetReferences(System.Windows.Controls.Label minesLabel, System.Windows.Controls.Label timerLabel, System.Windows.Controls.Label faceLabel)
         {
-            this.movesLabel = movesLabel;
+            this.minesLabel = minesLabel;
             this.timerLabel = timerLabel;
             this.faceLabel = faceLabel;
         }
@@ -118,6 +131,7 @@ namespace Saper
             this.firstMoveDone = false;
             this.gameEnded = false;
             this.NumberOfMoves = 0;
+            this.NumberOfFlagsToBePlaced = this.mines;
             this.TimerCounter = 0;
             this.dispatcherTimer.Stop();
             this.field_size = (300 / this.cols > 28) ? ((int)Math.Ceiling((float) (300 / this.cols))) : 28;
@@ -336,10 +350,12 @@ namespace Saper
                 if (mineField[row, col].fieldStatus == FieldStatus.unopen)
                 {
                     mineField[row, col].fieldStatus = FieldStatus.flag;
+                    NumberOfFlagsToBePlaced--;
                     displayField(row, col);
                 } 
                 else if (mineField[row, col].fieldStatus == FieldStatus.flag)
                 {
+                    NumberOfFlagsToBePlaced++;
                     mineField[row, col].fieldStatus = FieldStatus.questionMark;
                     displayField(row, col);
                 }
@@ -361,6 +377,7 @@ namespace Saper
                 gameEnded = true;
                 this.dispatcherTimer.Stop();
                 revealAll(true);
+                NumberOfFlagsToBePlaced = 0;
                 this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_win.png")));
                 MessageBox.Show(Application.Current.FindResource("_saperWinMessage").ToString() + NumberOfMoves.ToString());
             }
@@ -410,7 +427,8 @@ namespace Saper
                     } 
                     else
                     {
-                        displayField(rowNumber, colNumber);
+                        if (this.gameEnded == false)
+                            displayField(rowNumber, colNumber);
                     }
                 }
             }

@@ -36,7 +36,7 @@ namespace Saper
 
             this.game = new SaperGame(mineField);
             this.game.setOptions(rows, cols, mines);
-            this.game.SetReferences(labelMoves, labelTimer, face);
+            this.game.SetReferences(labelMines, labelTimer, face);
             this.game.startGame();
         }
 
