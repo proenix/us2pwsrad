@@ -5,22 +5,28 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Saper"
         mc:Ignorable="d"
-        Title="Saper" Height="450" Width="379.769" Closing="Window_Closing" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" MinWidth="300">
+        Title="{DynamicResource _gameTitle}" 
+        Height="450" 
+        Width="350" 
+        Closing="Window_Closing" 
+        WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight" 
+        MinWidth="300">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Game">
-                    <MenuItem Header="_New" Click="MenuItem_Click_NewGame" />
-                    <MenuItem Header="_Options" Click="MenuItem_Click_Options" />
-                    <MenuItem Header="_Exit" Click="MenuItem_Click_Exit" />
+                <MenuItem Header="{DynamicResource _menuGame}">
+                    <MenuItem Header="{DynamicResource _menuNew}" Click="MenuItem_Click_NewGame" />
+                    <MenuItem Header="{DynamicResource _menuOptions}" Click="MenuItem_Click_Options" />
+                    <MenuItem Header="{DynamicResource _menuExit}" Click="MenuItem_Click_Exit" />
                 </MenuItem>
-                <MenuItem Header="_Help" Click="MenuItem_Click_Help" />
-                <MenuItem Header="_About" Click="MenuItem_Click_About" />
+                <MenuItem Header="{DynamicResource _menuHelp}" Click="MenuItem_Click_Help" />
+                <MenuItem Header="{DynamicResource _menuAbout}" Click="MenuItem_Click_About" />
             </Menu>
         </DockPanel>
         <Grid Margin="10,25,10,0" Grid.ColumnSpan="2" Height="45" VerticalAlignment="Top" MinWidth="300">
             <Grid Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Width="100" Background="#FFE6E6E6">
-                <Label Content="Moves:" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <Label Content="{DynamicResource _labelMovesTitle}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
                 <Label x:Name="labelMoves" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
             </Grid>
             <Grid Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Center" Width="100">
@@ -32,7 +38,7 @@
 
             </Grid>
             <Grid Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Right" Width="100" Background="#FFE6E6E6">
-                <Label Content="Time:" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <Label Content="{DynamicResource _labelTimeerTitle}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
                 <Label x:Name="labelTimer" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
             </Grid>
         </Grid>
@@ -44,7 +50,8 @@
               VerticalAlignment="Top" 
               Margin="0" 
               ShowGridLines="True" 
-              HorizontalAlignment="Center" ScrollViewer.HorizontalScrollBarVisibility="Visible">
+              HorizontalAlignment="Center" 
+              ScrollViewer.HorizontalScrollBarVisibility="Visible">
                 <Grid.ColumnDefinitions>
                 </Grid.ColumnDefinitions>
 

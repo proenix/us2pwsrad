@@ -301,7 +301,7 @@ namespace Saper
                         this.gameEnded = true;
                         this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_dead.png")));
                         revealAll();
-                        MessageBox.Show("GAME OVER.");
+                        MessageBox.Show(Application.Current.FindResource("_saperGameOverMessage").ToString());
                     }
                 }
                 else
@@ -362,7 +362,7 @@ namespace Saper
                 this.dispatcherTimer.Stop();
                 revealAll(true);
                 this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_win.png")));
-                MessageBox.Show("Congrats! Field finished.");
+                MessageBox.Show(Application.Current.FindResource("_saperWinMessage").ToString() + NumberOfMoves.ToString());
             }
         }
 
@@ -591,8 +591,6 @@ namespace Saper
                     }
                 }
             }
-
-            // TODO: Show happy/sad face :)
         }
 
         // Get color of number in field.

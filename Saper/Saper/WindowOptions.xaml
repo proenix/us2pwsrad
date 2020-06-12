@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Saper"
         mc:Ignorable="d"
-        Title="WindowOptions" MinWidth="1" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
+        Title="{DynamicResource _optionsTitle}" MinWidth="1" ResizeMode="NoResize" Topmost="True" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
     <Grid Height="252">
         <GroupBox Header="{DynamicResource _optionsGameFieldSizeHeader}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="217" Height="102">
             <Grid Margin="0">

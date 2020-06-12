@@ -3,20 +3,21 @@
                     xmlns:local="clr-namespace:Saper" 
                     xmlns:system="clr-namespace:System;assembly=mscorlib">
     <!-- Help Window -->
-    <system:String x:Key="_helpTitle">Help</system:String>
-    <system:String x:Key="_helpText" xml:space="preserve">To play use right and left mouse button.
+    <system:String x:Key="_helpTitle">Minesweeper - Help</system:String>
+    <system:String x:Key="_helpText" xml:space="preserve">
+        To play use right, left and middle mouse button.
         
-            With right mouse button you can mark mine on the field.
-            Left mouse button reveals clicked field.
+        With right mouse button you can mark mine on the field.
+        Left mouse button reveals clicked field.
+        Middle button helps to reveal neighbour fields if number of fields with flag set equal number on clicked field.
         
-            If you happen to revela field with mine - you lose.
-            Your goal is to correctly mark all mines on the field. 
-            You don't have to reveal all fields without mines.
+        If you happen to revela field with mine - you lose.
+        Your goal is to reveal all fields without mines on the board. 
         
-            Good luck!</system:String>
+        Good luck!</system:String>
 
     <!-- About Window -->
-    <system:String x:Key="_aboutTitle">Help</system:String>
+    <system:String x:Key="_aboutTitle">Minesweeper - Help</system:String>
     <system:String x:Key="_aboutText" xml:space="preserve">
         Saper v1.0.0
         
@@ -24,6 +25,7 @@
     </system:String>
     
     <!-- Options Window -->
+    <system:String x:Key="_optionsTitle">Minesweeper - options</system:String>
     <system:String x:Key="_optionsGameFieldSizeHeader">Game size</system:String>
     <system:String x:Key="_optionsGameFieldSizeColumns">Columns:</system:String>
     <system:String x:Key="_optionsGameFieldSizeRows">Rows:</system:String>
@@ -37,4 +39,21 @@
     <system:String x:Key="_optionsMinesTooLowError">Number of mines is too low.</system:String>
     <system:String x:Key="_optionsMinesTooHighError">Number of mines is too high.</system:String>
     <system:String x:Key="_optionsSavedMessage">Options saved. To apply changes please start new game.</system:String>
+
+    <!-- Main Window -->
+    <system:String x:Key="_gameTitle">Minesweeper</system:String>
+    <system:String x:Key="_menuGame">Game</system:String>
+    <system:String x:Key="_menuNew">New game</system:String>
+    <system:String x:Key="_menuOptions">Options</system:String>
+    <system:String x:Key="_menuExit">Exit</system:String>
+    <system:String x:Key="_menuHelp">Help</system:String>
+    <system:String x:Key="_menuAbout">About</system:String>
+    <system:String x:Key="_labelMovesTitle">Number of moves:</system:String>
+    <system:String x:Key="_labelTimeerTitle">Time:</system:String>
+    
+    <!-- Game strings -->
+    <system:String x:Key="_saperGameOverMessage">Game Over!</system:String>
+    <system:String x:Key="_saperWinMessage"  xml:space="preserve">
+        Congrats! Field finished.
+        Moves: </system:String>
 </ResourceDictionary>
