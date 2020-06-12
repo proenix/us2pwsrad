@@ -43,7 +43,14 @@
             </Grid>
         </Grid>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,6" MinWidth="300" MinHeight="300">
+        <ScrollViewer 
+            HorizontalScrollBarVisibility="Auto" 
+            VerticalScrollBarVisibility="Auto" 
+            VerticalAlignment="Top" 
+            Margin="10,80,10,6" 
+            MinWidth="300" 
+            MinHeight="300" 
+            HorizontalContentAlignment="Stretch">
             <Grid x:Name="mineField" 
               MinWidth="300" 
               Background="#7FE2D8D8" 
