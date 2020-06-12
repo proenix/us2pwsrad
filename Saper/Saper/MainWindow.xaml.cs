@@ -106,6 +106,10 @@ namespace Saper
             if (response == MessageBoxResult.No)
             {
                 e.Cancel = true;
+            } 
+            else
+            {
+                Application.Current.Shutdown();
             }
         }
 
