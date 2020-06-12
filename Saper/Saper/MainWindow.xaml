@@ -5,8 +5,69 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Saper"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{DynamicResource _gameTitle}" 
+        Height="450" 
+        Width="350" 
+        Closing="Window_Closing" 
+        WindowStartupLocation="CenterScreen" 
+        SizeToContent="WidthAndHeight" 
+        MinWidth="300">
     <Grid>
-        
+        <DockPanel>
+            <Menu DockPanel.Dock="Top">
+                <MenuItem Header="{DynamicResource _menuGame}">
+                    <MenuItem Header="{DynamicResource _menuNew}" Click="MenuItem_Click_NewGame" />
+                    <MenuItem Header="{DynamicResource _menuOptions}" Click="MenuItem_Click_Options" />
+                    <MenuItem Header="{DynamicResource _menuExit}" Click="MenuItem_Click_Exit" />
+                </MenuItem>
+                <MenuItem Header="{DynamicResource _menuHelp}" Click="MenuItem_Click_Help" />
+                <MenuItem Header="{DynamicResource _menuAbout}" Click="MenuItem_Click_About" />
+            </Menu>
+        </DockPanel>
+        <Grid Margin="10,25,10,0" Grid.ColumnSpan="2" Height="45" VerticalAlignment="Top" MinWidth="300">
+            <Grid Grid.RowSpan="2" Grid.Column="1" HorizontalAlignment="Left" Width="100" Background="#FFE6E6E6">
+                <Label Content="{DynamicResource _labelMinesTitle}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <Label x:Name="labelMines" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+            </Grid>
+            <Grid Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Center" Width="100">
+                <Label x:Name="face" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="30" Height="30" BorderBrush="#FFA8A8A8" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxWidth="30" MouseDown="face_MouseDown" MouseUp="face_MouseUp">
+                </Label>
+
+            </Grid>
+            <Grid Grid.RowSpan="2" Grid.Column="3" HorizontalAlignment="Right" Width="100" Background="#FFE6E6E6">
+                <Label Content="{DynamicResource _labelTimeerTitle}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" />
+                <Label x:Name="labelTimer" Content="0" Grid.Row="2" VerticalAlignment="Bottom" HorizontalAlignment="Center" />
+            </Grid>
+        </Grid>
+
+        <ScrollViewer 
+            HorizontalScrollBarVisibility="Auto" 
+            VerticalScrollBarVisibility="Auto" 
+            VerticalAlignment="Top" 
+            Margin="10,80,10,6" 
+            MinWidth="300" 
+            MinHeight="300" 
+            HorizontalContentAlignment="Stretch">
+            <Grid x:Name="mineField" 
+              MinWidth="300" 
+              Background="#7FE2D8D8" 
+              VerticalAlignment="Top" 
+              Margin="0" 
+              ShowGridLines="True" 
+              HorizontalAlignment="Center" 
+              ScrollViewer.HorizontalScrollBarVisibility="Visible">
+                <Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                </Grid.RowDefinitions>
+                <Grid.Resources>
+                    <Style TargetType="{x:Type Label}">
+                        <Setter Property="Margin" Value="1,1,1,1" />
+                        <Setter Property="FontWeight" Value="Bold" />
+                    </Style>
+                </Grid.Resources>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Window>
