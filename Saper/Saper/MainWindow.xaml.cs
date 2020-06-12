@@ -97,7 +97,9 @@ namespace Saper
         /// <param name="e"></param>
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            var response = MessageBox.Show("Do you really want to exit?", "Exiting...",
+            var response = MessageBox.Show(
+                this.FindResource("_mainExitMessage").ToString(),
+                this.FindResource("_mainExitTitle").ToString(),
                 MessageBoxButton.YesNo, 
                 MessageBoxImage.Question);
 

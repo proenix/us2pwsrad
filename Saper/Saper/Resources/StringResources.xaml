@@ -19,7 +19,7 @@
     <!-- About Window -->
     <system:String x:Key="_aboutTitle">Minesweeper - Help</system:String>
     <system:String x:Key="_aboutText" xml:space="preserve">
-        Saper v1.0.0
+        Minesweeper v1.0.0
         
         Author: Piotr Trzepacz
     </system:String>
@@ -50,6 +50,8 @@
     <system:String x:Key="_menuAbout">About</system:String>
     <system:String x:Key="_labelMinesTitle">Flags left:</system:String>
     <system:String x:Key="_labelTimeerTitle">Time:</system:String>
+    <system:String x:Key="_mainExitMessage">Do you really want to exit?</system:String>
+    <system:String x:Key="_mainExitTitle">Exit</system:String>
     
     <!-- Game strings -->
     <system:String x:Key="_saperGameOverMessage">Game Over!</system:String>
