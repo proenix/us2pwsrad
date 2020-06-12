@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -97,6 +98,18 @@ namespace Saper
             this.dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             this.dispatcherTimer.Tick += dispatcherTimer_Tick;
             this.dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
+
+            ResourceDictionary dict = new ResourceDictionary();
+            switch (Thread.CurrentThread.CurrentCulture.ToString())
+            {
+                case "pl-PL":
+                    dict.Source = new Uri("..\\Resources\\StringResources.pl-PL.xaml", UriKind.Relative);
+                    break;
+                default:
+                    dict.Source = new Uri("..\\Resources\\StringResources.xaml", UriKind.Relative);
+                    break;
+            }
+            Application.Current.Resources.MergedDictionaries.Add(dict);
         }
 
         // Initilaize row and column definitions for game field. Clear old data.
