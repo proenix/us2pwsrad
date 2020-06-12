@@ -375,6 +375,10 @@ namespace Saper
         /// <returns>Number of fields that were opened.</returns>
         private int revealOnMiddle(int row, int col)
         {
+            // Game already ended. Do nothing
+            if (this.gameEnded == true)
+                return 0;
+
             // Count number of flags seted in near fields.
             int startPosRow = (row - 1 < 0) ? row : (row - 1);
             int startPosCol = (col - 1 < 0) ? col : (col - 1);
