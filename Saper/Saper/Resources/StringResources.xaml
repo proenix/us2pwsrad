@@ -30,10 +30,10 @@
     <system:String x:Key="_optionsGameFieldAdditionalOptionsHeader">Additional Options</system:String>
     <system:String x:Key="_optionsGameFieldNumberOfMines">Number of mines:</system:String>
     <system:String x:Key="_optionsSaveButton">Save</system:String>
-    <system:String x:Key="_optionsRowsTooLowError">Number of rows should be higher than 2.</system:String>
-    <system:String x:Key="_optionsRowsTooHighError">Number of rows should be no higher than 100.</system:String>
-    <system:String x:Key="_optionsColsTooLowError">Number of cols should be higher than 2.</system:String>
-    <system:String x:Key="_optionsColsTooHighError">Number of cols should be no higher than 100.</system:String>
+    <system:String x:Key="_optionsRowsTooLowError">Number of rows should be higher than 10.</system:String>
+    <system:String x:Key="_optionsRowsTooHighError">Number of rows should be no higher than 50.</system:String>
+    <system:String x:Key="_optionsColsTooLowError">Number of cols should be higher than 10.</system:String>
+    <system:String x:Key="_optionsColsTooHighError">Number of cols should be no higher than 50.</system:String>
     <system:String x:Key="_optionsMinesTooLowError">Number of mines is too low.</system:String>
     <system:String x:Key="_optionsMinesTooHighError">Number of mines is too high.</system:String>
     <system:String x:Key="_optionsSavedMessage">Options saved. To apply changes please start new game.</system:String>

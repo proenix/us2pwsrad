@@ -96,24 +96,24 @@ namespace Saper
             catch (Exception){}
 
             // Check rows conditions.
-            if (nRows <= 2)
+            if (nRows <= 10)
             {
                 MessageBox.Show(this.FindResource("_optionsRowsTooLowError").ToString());
                 return;
             }
-            else if (nRows > 100)
+            else if (nRows > 50)
             {
                 MessageBox.Show(this.FindResource("_optionsRowsTooHighError").ToString());
                 return;
             }
 
             // Check cols conditions.
-            if (nCols <= 2)
+            if (nCols <= 10)
             {
                 MessageBox.Show(this.FindResource("_optionsColsTooLowError").ToString());
                 return;
             }
-            else if (nCols > 100)
+            else if (nCols > 50)
             {
                 MessageBox.Show(this.FindResource("_optionsColsTooLowError").ToString());
                 return;
