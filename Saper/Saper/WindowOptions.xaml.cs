@@ -96,7 +96,7 @@ namespace Saper
             catch (Exception){}
 
             // Check rows conditions.
-            if (nRows <= 10)
+            if (nRows < 5)
             {
                 MessageBox.Show(this.FindResource("_optionsRowsTooLowError").ToString());
                 return;
@@ -108,7 +108,7 @@ namespace Saper
             }
 
             // Check cols conditions.
-            if (nCols <= 10)
+            if (nCols < 5)
             {
                 MessageBox.Show(this.FindResource("_optionsColsTooLowError").ToString());
                 return;

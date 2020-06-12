@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Saper"
         mc:Ignorable="d"
-        Title="Saper" Height="450" Width="379.769" Closing="Window_Closing" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight">
+        Title="Saper" Height="450" Width="379.769" Closing="Window_Closing" WindowStartupLocation="CenterScreen" SizeToContent="WidthAndHeight" MinWidth="300">
     <Grid>
         <DockPanel>
             <Menu DockPanel.Dock="Top">
@@ -34,7 +34,6 @@
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,6" MinWidth="300" MinHeight="300">
             <Grid x:Name="mineField" 
               MinWidth="300" 
-              MinHeight="300" 
               Background="#7FE2D8D8" 
               VerticalAlignment="Top" 
               Margin="0" 
@@ -47,7 +46,7 @@
                 </Grid.RowDefinitions>
                 <Grid.Resources>
                     <Style TargetType="{x:Type Label}">
-                        <Setter Property="Margin" Value="0,0,0,0" />
+                        <Setter Property="Margin" Value="1,1,1,1" />
                         <Setter Property="FontWeight" Value="Bold" />
                     </Style>
                 </Grid.Resources>

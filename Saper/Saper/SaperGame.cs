@@ -15,11 +15,11 @@ namespace Saper
     class SaperGame
     {
         private Random rng;
-        private int cols = 10;
-        private int rows = 10;
-        private int mines = 16;
+        private int cols;
+        private int rows;
+        private int mines;
 
-        const int FIELD_WIDTH = 30;
+        private int field_size;
 
         private bool firstMoveDone = false;
         private bool gameEnded = false;
@@ -126,11 +126,13 @@ namespace Saper
 
         public void startGame()
         {
-            firstMoveDone = false;
-            gameEnded = false;
-            NumberOfMoves = 0;
-            TimerCounter = 0;
-            dispatcherTimer.Stop();
+            this.firstMoveDone = false;
+            this.gameEnded = false;
+            this.NumberOfMoves = 0;
+            this.TimerCounter = 0;
+            this.dispatcherTimer.Stop();
+            this.field_size = (300 / this.cols > 28) ? ((int)Math.Ceiling((float) (300 / this.cols))) : 28;
+
             generateField();
         }
 
@@ -156,8 +158,8 @@ namespace Saper
 
             // Initialize field
             initializeFields(cols, rows);
-            mineFieldLayout.Width = cols * FIELD_WIDTH;
-            mineFieldLayout.Height = rows * FIELD_WIDTH;
+            mineFieldLayout.Width = cols * field_size;
+            mineFieldLayout.Height = rows * field_size;
             mineFieldLayout.ShowGridLines = false;
             for (int row = 0; row < rows; row++)
             {
@@ -165,11 +167,12 @@ namespace Saper
                 {
                     System.Windows.Controls.Label label = new System.Windows.Controls.Label
                     {
-                        Width = FIELD_WIDTH,
-                        Height = FIELD_WIDTH,
+                        Width = field_size,
+                        Height = field_size,
                         BorderBrush = Brushes.Gray,
                         BorderThickness = new Thickness(1),
                         HorizontalContentAlignment = HorizontalAlignment.Center,
+                        VerticalContentAlignment = VerticalAlignment.Center,
                         Background = Brushes.LightGray
                     };
                     label.MouseUp += new MouseButtonEventHandler(FieldMouseUp);
