@@ -31,9 +31,6 @@
             </Grid>
             <Grid Grid.RowSpan="2" Grid.Column="2" HorizontalAlignment="Center" Width="100">
                 <Label x:Name="face" HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="30" Height="30" BorderBrush="#FFA8A8A8" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" MaxWidth="30" MouseDown="face_MouseDown" MouseUp="face_MouseUp">
-                    <Label.Background>
-                        <ImageBrush ImageSource="face_unclicked.png" Stretch="Uniform"/>
-                    </Label.Background>
                 </Label>
 
             </Grid>

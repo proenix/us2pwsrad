@@ -165,7 +165,6 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="face_unclicked.png" />
     <Resource Include="Images\face_clicked.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
