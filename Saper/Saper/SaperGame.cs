@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -29,7 +24,7 @@ namespace Saper
         private System.Windows.Controls.Label timerLabel;
         private MineField[,] mineField;
 
-        // Define structore of single mine field.
+        // Define structure of single mine field.
         private struct MineField
         {
             public System.Windows.Controls.Label field;
@@ -88,8 +83,8 @@ namespace Saper
             this.dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
         }
 
-        // Initilaize row and column definitions for game field.
-        private void initializeFields(int cols, int rows)
+        // Initilaize row and column definitions for game field. Clear old data.
+        private void initializeFields(int rows, int cols)
         {
             mineFieldLayout.RowDefinitions.Clear();
             for (int row = 0; row < rows; row++)
@@ -106,24 +101,15 @@ namespace Saper
             mineFieldLayout.Children.Clear();
         }
 
-        public int getMines()
-        {
-            return this.mines;
-        }
-
-        public (int, int) getSize()
-        {
-            return (this.rows, this.cols);
-        }
-
         // Set options for game.
-        public void setOptions(int cols, int rows, int mines)
+        public void setOptions(int rows, int cols, int mines)
         {
-            this.cols = cols;
             this.rows = rows;
+            this.cols = cols;
             this.mines = mines;
         }
 
+        // Start new game with current options.
         public void startGame()
         {
             this.firstMoveDone = false;
@@ -157,9 +143,9 @@ namespace Saper
             }
 
             // Initialize field
-            initializeFields(cols, rows);
-            mineFieldLayout.Width = cols * field_size;
-            mineFieldLayout.Height = rows * field_size;
+            initializeFields(rows, cols);
+            mineFieldLayout.Width = cols * (field_size + 2);
+            mineFieldLayout.Height = rows * (field_size + 2);
             mineFieldLayout.ShowGridLines = false;
             for (int row = 0; row < rows; row++)
             {

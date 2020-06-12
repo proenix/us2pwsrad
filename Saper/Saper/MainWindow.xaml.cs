@@ -25,6 +25,9 @@ namespace Saper
     public partial class MainWindow : Window
     {
         private SaperGame game;
+        private int rows = 10;
+        private int cols = 10;
+        private int mines = 20;
 
         public MainWindow()
         {
@@ -32,8 +35,8 @@ namespace Saper
             SetLanguageDictionary();
 
             this.game = new SaperGame(mineField);
-            this.game.setOptions(10, 10, 20);
-            this.game.SetReferences(labelMoves, labelTimer);
+            this.game.setOptions(rows, cols, mines);
+            this.game.SetReferences(labelMoves, labelTimer, debug);
             this.game.startGame();
         }
 
@@ -55,13 +58,14 @@ namespace Saper
         // Start new game with current options.
         private void MenuItem_Click_NewGame(object sender, RoutedEventArgs e)
         {
+            this.game.setOptions(rows, cols, mines);
             this.game.startGame();
         }
 
         // Open options window.
         private void MenuItem_Click_Options(object sender, RoutedEventArgs e)
         {
-            WindowOptions windowOptions = new WindowOptions(this, game.getSize(), game.getMines());
+            WindowOptions windowOptions = new WindowOptions(this, rows, cols, mines);
             windowOptions.Show();
         }
 
@@ -104,9 +108,11 @@ namespace Saper
         }
 
         // Pass saving options to game object.
-        internal void setGameOptions(int cols, int rows, int mines)
+        internal void setGameOptions(int rows, int cols, int mines)
         {
-            this.game.setOptions(cols, rows, mines);
+            this.rows = rows;
+            this.cols = cols;
+            this.mines = mines;
         }
     }
 }

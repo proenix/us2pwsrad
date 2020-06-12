@@ -22,15 +22,15 @@ namespace Saper
     public partial class WindowOptions : Window
     {
         private MainWindow mw;
-        private int cols;
         private int rows;
+        private int cols;
         private int mines;
 
-        public WindowOptions(MainWindow mw, (int, int) size, int mines)
+        public WindowOptions(MainWindow mw, int rows, int cols, int mines)
         {
             this.mw = mw;
-            this.cols = size.Item1;
-            this.rows = size.Item2;
+            this.rows = rows;
+            this.cols = cols;
             this.mines = mines;
             InitializeComponent();
             SetLanguageDictionary();
@@ -61,8 +61,8 @@ namespace Saper
         // Prepopulate fields with current options.
         private void FillForm() 
         {
-            optionsCols.Text = cols.ToString();
             optionsRows.Text = rows.ToString();
+            optionsCols.Text = cols.ToString();
             optionsNumberOfMines.Text = mines.ToString();
         }
 
@@ -132,7 +132,7 @@ namespace Saper
             }
 
             // Save game object in main window 
-            mw.setGameOptions(nCols, nRows, nMines);
+            mw.setGameOptions(nRows, nCols, nMines);
             MessageBox.Show(this.FindResource("_optionsSavedMessage").ToString());
         }
     }
