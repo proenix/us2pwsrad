@@ -162,6 +162,9 @@ namespace Saper
                         Background = Brushes.LightGray
                     };
                     label.MouseUp += new MouseButtonEventHandler(FieldMouseUp);
+                    label.MouseDown += new MouseButtonEventHandler(FieldMouseDown);
+                    label.MouseEnter += new MouseEventHandler(FieldMouseEnter);
+                    label.MouseLeave += new MouseEventHandler(FieldMouseLeave);
                     label.Tag = (row, col);
                     if (mineField[row,col].isMine == true)
                     {
@@ -177,19 +180,90 @@ namespace Saper
             }
         }
 
+        private void FieldMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            FieldMouseEnter(sender, e);
+        }
+
+        private void FieldMouseLeave(object sender, MouseEventArgs e)
+        {
+            System.Windows.Controls.Label label = (System.Windows.Controls.Label)sender;
+            (int, int) pos = ((int, int))label.Tag;
+            int row = pos.Item1;
+            int col = pos.Item2;
+
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                displayField(row, col);
+            } 
+            else if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                int startPosRow = (row - 1 < 0) ? row : (row - 1);
+                int startPosCol = (col - 1 < 0) ? col : (col - 1);
+                int endPosRow = (row + 1 >= rows) ? row : (row + 1);
+                int endPosCol = (col + 1 >= cols) ? col : (col + 1);
+                for (int rowNumber = startPosRow; rowNumber <= endPosRow; rowNumber++)
+                {
+                    for (int colNumber = startPosCol; colNumber <= endPosCol; colNumber++)
+                    {
+                        if (mineField[rowNumber, colNumber].fieldStatus == FieldStatus.unopen)
+                        {
+                            displayField(rowNumber, colNumber);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void FieldMouseEnter(object sender, MouseEventArgs e)
+        {
+            System.Windows.Controls.Label label = (System.Windows.Controls.Label)sender;
+            (int, int) pos = ((int, int))label.Tag;
+            int row = pos.Item1;
+            int col = pos.Item2;
+            MineField field = mineField[row, col];
+
+            if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                if (field.fieldStatus == FieldStatus.unopen)
+                {
+                    label.Background = Brushes.White;
+                }
+            }
+            else if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                // TODO: for middle click.
+                int startPosRow = (row - 1 < 0) ? row : (row - 1);
+                int startPosCol = (col - 1 < 0) ? col : (col - 1);
+                int endPosRow = (row + 1 >= rows) ? row : (row + 1);
+                int endPosCol = (col + 1 >= cols) ? col : (col + 1);
+                for (int rowNumber = startPosRow; rowNumber <= endPosRow; rowNumber++)
+                {
+                    for (int colNumber = startPosCol; colNumber <= endPosCol; colNumber++)
+                    {
+                        if (mineField[rowNumber, colNumber].fieldStatus == FieldStatus.unopen)
+                        {
+                            mineField[rowNumber, colNumber].field.Background = Brushes.Green;
+                            // this.debug.Content = int.Parse(this.debug.Content.ToString()) + 1;
+                        }
+                    }
+                }
+            }
+        }        
+
         private void FieldMouseUp(object sender, MouseButtonEventArgs e)
         {
+            // Game already ended. Do nothing
+            if (this.gameEnded == true)
+                return;
+
             System.Windows.Controls.Label label = (System.Windows.Controls.Label) sender;
             (int, int) pos = ((int, int)) label.Tag;
             int row = pos.Item1;
             int col = pos.Item2;
 
-            // Game already ended. Do nothing
-            if (this.gameEnded == true)
-                return;
-
             // Already open do nothing.
-            if (mineField[row, col].fieldStatus == FieldStatus.open)
+            if (e.ChangedButton != MouseButton.Middle && mineField[row, col].fieldStatus == FieldStatus.open)
                 return;
 
             // Check mouse click actions
@@ -220,6 +294,17 @@ namespace Saper
             else if (e.ChangedButton == MouseButton.Middle)
             {
                 // TODO
+                int startPosRow = (row - 1 < 0) ? row : (row - 1);
+                int startPosCol = (col - 1 < 0) ? col : (col - 1);
+                int endPosRow = (row + 1 >= rows) ? row : (row + 1);
+                int endPosCol = (col + 1 >= cols) ? col : (col + 1);
+                for (int rowNumber = startPosRow; rowNumber <= endPosRow; rowNumber++)
+                {
+                    for (int colNumber = startPosCol; colNumber <= endPosCol; colNumber++)
+                    {
+                        displayField(rowNumber, colNumber);
+                    }
+                }
             }
             else if (e.ChangedButton == MouseButton.Right)
             {
@@ -380,7 +465,6 @@ namespace Saper
         private void revealNeighbours(int row, int col, bool ignoreFieldStatus = false, bool placeFlagOnMine = false)
         {
             // TODO: Optimize algorithm for revealing neighbour fields.
-            //this.debug.Content = int.Parse(debug.Content.ToString()) + 1;
             // If opened alredy pass
             if (mineField[row, col].fieldStatus == FieldStatus.open)
                 return;
