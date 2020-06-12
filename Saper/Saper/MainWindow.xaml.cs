@@ -36,7 +36,7 @@ namespace Saper
 
             this.game = new SaperGame(mineField);
             this.game.setOptions(rows, cols, mines);
-            this.game.SetReferences(labelMoves, labelTimer, debug);
+            this.game.SetReferences(labelMoves, labelTimer, face);
             this.game.startGame();
         }
 
@@ -113,6 +113,18 @@ namespace Saper
             this.rows = rows;
             this.cols = cols;
             this.mines = mines;
+        }
+
+        private void face_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            face.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_clicked.png")));
+        }
+
+        private void face_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            face.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_unclicked.png")));
+            this.game.setOptions(rows, cols, mines);
+            this.game.startGame();
         }
     }
 }

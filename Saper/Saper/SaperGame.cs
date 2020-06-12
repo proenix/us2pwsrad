@@ -22,6 +22,8 @@ namespace Saper
         private Grid mineFieldLayout;
         private System.Windows.Controls.Label movesLabel;
         private System.Windows.Controls.Label timerLabel;
+        private System.Windows.Controls.Label faceLabel;
+
         private MineField[,] mineField;
 
         // Define structure of single mine field.
@@ -62,10 +64,11 @@ namespace Saper
         }
         System.Windows.Threading.DispatcherTimer dispatcherTimer;
 
-        internal void SetReferences(System.Windows.Controls.Label movesLabel, System.Windows.Controls.Label timerLabel)
+        internal void SetReferences(System.Windows.Controls.Label movesLabel, System.Windows.Controls.Label timerLabel, System.Windows.Controls.Label faceLabel)
         {
             this.movesLabel = movesLabel;
             this.timerLabel = timerLabel;
+            this.faceLabel = faceLabel;
         }
 
         // Holds predefined types of possible in-game field state
@@ -118,6 +121,7 @@ namespace Saper
             this.TimerCounter = 0;
             this.dispatcherTimer.Stop();
             this.field_size = (300 / this.cols > 28) ? ((int)Math.Ceiling((float) (300 / this.cols))) : 28;
+            this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_unclicked.png")));
 
             generateField();
         }
@@ -166,10 +170,10 @@ namespace Saper
                     label.MouseEnter += new MouseEventHandler(FieldMouseEnter);
                     label.MouseLeave += new MouseEventHandler(FieldMouseLeave);
                     label.Tag = (row, col);
-                    if (mineField[row,col].isMine == true)
-                    {
-                        label.Background = Brushes.Crimson;
-                    }
+                    //if (mineField[row,col].isMine == true)
+                    //{
+                    //    label.Background = Brushes.Crimson;
+                    //}
                     Grid.SetColumn(label, col);
                     Grid.SetRow(label, row);
                     mineFieldLayout.Children.Add(label);
@@ -180,13 +184,18 @@ namespace Saper
             }
         }
 
+        // Process On Mouse Down action. Sends event to FieldMouseEnter to further processing.
         private void FieldMouseDown(object sender, MouseButtonEventArgs e)
         {
             FieldMouseEnter(sender, e);
         }
 
+        // Process On Mouse Over Field Leave action. When LMB of MMB is hold resets affected fields.
         private void FieldMouseLeave(object sender, MouseEventArgs e)
         {
+            if (this.gameEnded == true)
+                return;
+
             System.Windows.Controls.Label label = (System.Windows.Controls.Label)sender;
             (int, int) pos = ((int, int))label.Tag;
             int row = pos.Item1;
@@ -213,10 +222,15 @@ namespace Saper
                     }
                 }
             }
+            this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_unclicked.png")));
         }
 
+        // Process On Mouse Over Field Enter action. When LMB of MMB is hold shows affected fields.
         private void FieldMouseEnter(object sender, MouseEventArgs e)
         {
+            if (this.gameEnded == true)
+                return;
+
             System.Windows.Controls.Label label = (System.Windows.Controls.Label)sender;
             (int, int) pos = ((int, int))label.Tag;
             int row = pos.Item1;
@@ -228,11 +242,11 @@ namespace Saper
                 if (field.fieldStatus == FieldStatus.unopen)
                 {
                     label.Background = Brushes.White;
+                    this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_wut.png")));
                 }
             }
             else if (e.MiddleButton == MouseButtonState.Pressed)
             {
-                // TODO: for middle click.
                 int startPosRow = (row - 1 < 0) ? row : (row - 1);
                 int startPosCol = (col - 1 < 0) ? col : (col - 1);
                 int endPosRow = (row + 1 >= rows) ? row : (row + 1);
@@ -243,11 +257,11 @@ namespace Saper
                     {
                         if (mineField[rowNumber, colNumber].fieldStatus == FieldStatus.unopen)
                         {
-                            mineField[rowNumber, colNumber].field.Background = Brushes.Green;
-                            // this.debug.Content = int.Parse(this.debug.Content.ToString()) + 1;
+                            mineField[rowNumber, colNumber].field.Background = Brushes.White;
                         }
                     }
                 }
+                this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_wut.png")));
             }
         }        
 
@@ -261,6 +275,9 @@ namespace Saper
             (int, int) pos = ((int, int)) label.Tag;
             int row = pos.Item1;
             int col = pos.Item2;
+
+            // Reset face to default
+            this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_unclicked.png")));
 
             // Already open do nothing.
             if (e.ChangedButton != MouseButton.Middle && mineField[row, col].fieldStatus == FieldStatus.open)
@@ -276,33 +293,41 @@ namespace Saper
                     {
                         generateField();
                         FieldMouseUp(sender, e);
-                        return; 
-                    } 
+                        return;
+                    }
                     else
                     {
                         this.dispatcherTimer.Stop();
                         this.gameEnded = true;
+                        this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_dead.png")));
                         revealAll();
                         MessageBox.Show("GAME OVER.");
                     }
-                } 
+                }
                 else
                 {
                     revealNeighbours(row, col);
                 }
-            } 
+            }
             else if (e.ChangedButton == MouseButton.Middle)
             {
-                // TODO
-                int startPosRow = (row - 1 < 0) ? row : (row - 1);
-                int startPosCol = (col - 1 < 0) ? col : (col - 1);
-                int endPosRow = (row + 1 >= rows) ? row : (row + 1);
-                int endPosCol = (col + 1 >= cols) ? col : (col + 1);
-                for (int rowNumber = startPosRow; rowNumber <= endPosRow; rowNumber++)
+                if (mineField[row, col].fieldStatus == FieldStatus.open)
+                    revealOnMiddle(row, col);
+                else
                 {
-                    for (int colNumber = startPosCol; colNumber <= endPosCol; colNumber++)
+                    int startPosRow = (row - 1 < 0) ? row : (row - 1);
+                    int startPosCol = (col - 1 < 0) ? col : (col - 1);
+                    int endPosRow = (row + 1 >= rows) ? row : (row + 1);
+                    int endPosCol = (col + 1 >= cols) ? col : (col + 1);
+                    for (int rowNumber = startPosRow; rowNumber <= endPosRow; rowNumber++)
                     {
-                        displayField(rowNumber, colNumber);
+                        for (int colNumber = startPosCol; colNumber <= endPosCol; colNumber++)
+                        {
+                            if (mineField[rowNumber, colNumber].fieldStatus == FieldStatus.unopen)
+                            {
+                                displayField(rowNumber, colNumber);
+                            }
+                        }
                     }
                 }
             }
@@ -336,8 +361,56 @@ namespace Saper
                 gameEnded = true;
                 this.dispatcherTimer.Stop();
                 revealAll(true);
+                this.faceLabel.Background = new ImageBrush(new BitmapImage(new Uri("pack://application:,,,/Images/face_win.png")));
                 MessageBox.Show("Congrats! Field finished.");
             }
+        }
+
+        // Reveal neighbour fields if number of set flags is the same as number of neighbour mines.
+        /// <summary>
+        /// If flag is missplaced opens field anyway!
+        /// </summary>
+        /// <param name="row">Number of row to open.</param>
+        /// <param name="col">Number of column to open.</param>
+        /// <returns>Number of fields that were opened.</returns>
+        private int revealOnMiddle(int row, int col)
+        {
+            // Count number of flags seted in near fields.
+            int startPosRow = (row - 1 < 0) ? row : (row - 1);
+            int startPosCol = (col - 1 < 0) ? col : (col - 1);
+            int endPosRow = (row + 1 >= rows) ? row : (row + 1);
+            int endPosCol = (col + 1 >= cols) ? col : (col + 1);
+            int flagsCounter = 0;
+            int showed = 0;
+
+            // Count number of flags in neighbour fields.
+            for (int rowNumber = startPosRow; rowNumber <= endPosRow; rowNumber++)
+            {
+                for (int colNumber = startPosCol; colNumber <= endPosCol; colNumber++)
+                {
+                    if (mineField[rowNumber, colNumber].fieldStatus == FieldStatus.flag)
+                        flagsCounter++;
+                }
+            }
+            
+            // Process opening or displaying background back to normal.
+            for (int rowNumber = startPosRow; rowNumber <= endPosRow; rowNumber++)
+            {
+                for (int colNumber = startPosCol; colNumber <= endPosCol; colNumber++)
+                {
+                    if (mineField[row, col].numberOfNeighbourMines == flagsCounter 
+                        && mineField[rowNumber, colNumber].fieldStatus == FieldStatus.unopen)
+                    {
+                        FieldMouseUp(mineField[rowNumber, colNumber].field, new MouseButtonEventArgs(Mouse.PrimaryDevice, new TimeSpan(DateTime.Now.Ticks).Milliseconds, MouseButton.Left));
+                        showed++;
+                    } 
+                    else
+                    {
+                        displayField(rowNumber, colNumber);
+                    }
+                }
+            }
+            return showed;
         }
 
         // Increment Time Counter on each tick.
